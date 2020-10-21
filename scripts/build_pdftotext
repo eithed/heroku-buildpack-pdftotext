@@ -22,12 +22,12 @@ curl -L $POPPLER_TARBALL_URL | tar xJ
 
 (
 	cd poppler-${POPPLER_VERSION}
-	./configure \
-	  --prefix=/tmp/poppler \
-	  --disable-shared \
-	  --enable-build-type=release \
-	  --enable-libopenjpeg=none
+	mkdir build
+	cd build
+	cmake .. -DCMAKE_INSTALL_PREFIX=/tmp/poppler -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=release -DENABLE_LIBOPENJPEG=none 
+	make 
 	make install
 )
 
+echo "Copying /tmp/poppler/bin/pdftotext to $1"
 cp /tmp/poppler/bin/pdftotext $1
